@@ -44,29 +44,24 @@ void baris(int n){
 
 void printTabel(int choice){
 	if(choice == 1){
-		baris(80);
-		printf("No\t|Kode Produk\t|Nama Produk\t\t|Harga\t\t|Stok\t\t|\n");
+		baris(85); 
+		printf("%-4s|%-20s|%-21s|%-15s|%-11s\n","No","Kode Produk","Nama Produk","Harga","Stok");
 		for(int i=0; i<indexBarang; i++){
-			baris(80);
-			printf("%-4d\t|%-12s\t|%-21s\t|%-10lld\t|%-4lld\t|\n", i+1,products[i].codeProduct, products[i].name,products[i].harga, products[i].stok);
+			baris(85);
+			printf("%-4d|%-20s|%-21s|Rp%-13lld|%-11lld\n", i+1,products[i].codeProduct, products[i].name,products[i].harga, products[i].stok);
 		}
-		baris(80);
+		baris(85);
 	}else{
-		baris(100);
-		printf("No%-2\t|Kode transaksi\t%-2|Nama kasir%-12\t|total%-5\t|Detail pembelian\t\t\t|\n");
-		for(int i=0; i<indexBarang; i++){
-			baris(100);
-			printf("%-4d\t|TIX%-4d\t|%-21s\t|%-10lld\t|", i+1,arrayKasir[i].codeTransc, arrayKasir[i].nama_kasir,arrayKasir[i].totalHarga);
-			for(int j = 0 ; j<arrayKasir[i].lenTrans; j++){
-				if(j<1){
-					printf("\t|\t|\t|\t|%s - %s - %lld pcs - Rp.%lld\t|\n",arrayKasir[i].transactions[j].codeProduct,arrayKasir[i].transactions[j].name,arrayKasir[i].transactions[j].stok,arrayKasir[i].transactions[j].harga);
-				}else{
-					printf("|%s - %s - %lld pcs - Rp.%lld\t|\n",arrayKasir[i].transactions[j].codeProduct,arrayKasir[i].transactions[j].name,arrayKasir[i].transactions[j].stok,arrayKasir[i].transactions[j].harga);
-				}
-				
+		baris(115);
+		printf("%-4s|%-20s|%-21s|%-15s|%-52s\n","No","Kode transaksi","Nama kasir","total","Detail pembelian");
+		for(int i=0; i<indexTransaksi; i++){
+			baris(115);
+			printf("%-4d|%-3s%-17d|%-21s|Rp%-13lld|%s - %s - %lld pcs - Rp%lld\t\n", i+1,"TIX",arrayKasir[i].codeTransc, arrayKasir[i].nama_kasir,arrayKasir[i].totalHarga,arrayKasir[i].transactions[0].codeProduct,arrayKasir[i].transactions[0].name,arrayKasir[i].transactions[0].stok,arrayKasir[i].transactions[0].harga);
+			for(int j = 1 ; j<arrayKasir[i].lenTrans; j++){
+				printf("%-4s|%-20s|%-21s|%-15s|%s - %s - %lld pcs - Rp%lld\t\n"," "," "," "," ",arrayKasir[i].transactions[j].codeProduct,arrayKasir[i].transactions[j].name,arrayKasir[i].transactions[j].stok,arrayKasir[i].transactions[j].harga);
 			}
 		}
-		baris(100);
+		baris(115);
 		
 	}
 	printf("\n\n\n\n\n\n");
@@ -227,7 +222,6 @@ int validateCode(char trCode[]){
 
 void kasir(){
 	int pilihan;
-	int index = 0;
 	char namaKasir[20];
 	
 	while(1){
@@ -242,6 +236,7 @@ void kasir(){
 		printf("\n\n\n\n\n\n");
 	
 	if(pilihan==1){
+		int index = 0;
 		arrayKasir[indexTransaksi].totalHarga = 0;
 		
 		do{
@@ -279,10 +274,10 @@ void kasir(){
 			
 				if(option == 'N'){
 					arrayKasir[indexTransaksi].lenTrans = index;
-					arrayKasir[indexTransaksi].codeTransc = indexTransaksi+1;
 					printf("Total Transaksi TK%d adalah Rp%lld\n",indexTransaksi+1,arrayKasir[indexTransaksi].totalHarga);
 					printf("\n\n\n\n\n");
 					indexTransaksi++;
+					arrayKasir[indexTransaksi].codeTransc = indexTransaksi;
 					break;
 				}
 			}
@@ -290,7 +285,7 @@ void kasir(){
 		}else if(pilihan==2){
 			if(indexTransaksi == 0){
 				printf("Data barang kosong\n");
-			}else if(index>0){
+			}else{
 				printTabel(2);
 			}
 			printf("\n\n\n\n\n");
