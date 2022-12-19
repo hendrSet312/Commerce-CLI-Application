@@ -1,3 +1,12 @@
+/*
+	Tugas GSLC
+	Kelas : LB09
+	Anggota Kelompok: 
+	1. Hendry Setiawan (2602103356)
+	2. Muhammad Naufal Perdana (2602156526)
+	3. Kasandika Andariefli (2602141032)
+
+*/
 #include <stdio.h>
 #include<ctype.h>
 #include<string.h>
